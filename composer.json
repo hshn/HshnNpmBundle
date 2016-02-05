@@ -1,0 +1,28 @@
+{
+    "name": "hshn/npm-bundle",
+    "description": "Handle asset dependencies and scripts with npm",
+    "keywords": ["npm"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shota Hoshino",
+            "email": "sht.hshn@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/http-kernel": "^2.8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.2"
+    },
+    "autoload": {
+        "psr-4": { "Hshn\\NpmBundle\\": "src" }
+    },
+    "autoload-dev": {
+        "psr4": { "Hshn\\NpmBundle\\": "test" }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
