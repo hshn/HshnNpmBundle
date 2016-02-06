@@ -1,0 +1,19 @@
+parameters:
+  hshn.npm.bin: ~
+
+services:
+  hshn.npm:
+    public: false
+    class: Hshn\NpmBundle\Npm\Npm
+    arguments: [%hshn.npm.bin%]
+
+  hshn.npm.manager:
+    public: false
+    class: Hshn\NpmBundle\Npm\NpmManager
+    arguments:
+      - "@hshn.npm"
+      - ~
+
+  hshn.npm.configuration:
+    abstract: true
+    class: Hshn\NpmBundle\Npm\Configuration
