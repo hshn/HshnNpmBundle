@@ -22,7 +22,7 @@
         "psr-4": { "Hshn\\NpmBundle\\": "src" }
     },
     "autoload-dev": {
-        "psr4": { "Hshn\\NpmBundle\\": "test" }
+        "psr-4": { "Hshn\\NpmBundle\\": "test" }
     },
     "config": {
         "bin-dir": "bin"
