@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getName()
     {

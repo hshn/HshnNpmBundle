@@ -9,6 +9,11 @@ namespace Hshn\NpmBundle\Npm;
 interface ConfigurationInterface
 {
     /**
+     * @return string
+     */
+    public function getName();
+
+    /**
      * The configuration directory
      *
      * @return \SplFileInfo
