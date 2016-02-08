@@ -47,7 +47,7 @@ class HshnNpmExtension extends Extension
                 ->setArguments([$bundle, $path.'/'.$config['directory']])
                 ->setPublic(false);
 
-            $configurations[] = new Reference($bundle);
+            $configurations[] = new Reference($configuration);
         }
 
         $container->getDefinition('hshn.npm.manager')->replaceArgument(1, $configurations);
