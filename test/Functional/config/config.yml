@@ -1,0 +1,9 @@
+framework:
+  test: ~
+  secret: secret
+
+hshn_npm:
+  bin: %kernel.root_dir%/../../node_modules/.bin/npm
+  bundles:
+    FooBundle: ~
+    BarBundle: ~

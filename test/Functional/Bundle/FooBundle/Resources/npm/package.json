@@ -1,0 +1,8 @@
+{
+  "name": "hshn-npm-test-bundle-foo",
+  "description": "foo bundle for HshnNpmBundle tests",
+  "private": true,
+  "dependencies": {
+    "lodash": "4.0.0"
+  }
+}

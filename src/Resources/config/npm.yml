@@ -14,6 +14,17 @@ services:
       - "@hshn.npm"
       - ~
 
-  hshn.npm.configuration:
+  hshn.npm.config:
     abstract: true
     class: Hshn\NpmBundle\Npm\Configuration
+
+  # commands
+  hshn.npm.commands.abstract:
+    abstract: true
+    class: Hshn\NpmBundle\Command\AbstractNpmCommand
+    arguments: ["@hshn.npm.manager"]
+
+  hshn.npm.commands.install:
+    parent: hshn.npm.commands.abstract
+    class: Hshn\NpmBundle\Command\NpmInstallCommand
+    tags: [{name: console.command}]

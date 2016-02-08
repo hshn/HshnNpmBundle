@@ -1,0 +1,8 @@
+{
+  "name": "hshn-npm-test-bundle-bar",
+  "description": "foo bundle for HshnNpmBundle tests",
+  "private": true,
+  "dependencies": {
+    "underscore": "1.8.3"
+  }
+}
