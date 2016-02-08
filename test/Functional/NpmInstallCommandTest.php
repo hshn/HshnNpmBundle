@@ -11,13 +11,11 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @author Shota Hoshino <sht.hshn@gmail.com>
  */
-class NpmInstallCommandTest extends WebTestCase
+class NpmInstallCommandTest extends NpmCommandTestCase
 {
     protected function setUp()
     {
         parent::setUp();
-
-        static::bootKernel();
 
         $dirs = [
             __DIR__.'/Bundle/FooBundle/Resources/npm/node_modules',
@@ -51,11 +49,8 @@ class NpmInstallCommandTest extends WebTestCase
         $this->assertFileNotExists(__DIR__.'/Bundle/FooBundle/Resources/npm/node_modules/lodash');
         $this->assertFileNotExists(__DIR__.'/Bundle/BarBundle/Resources/npm/node_modules/underscore');
 
-        $app = new Application(static::$kernel);
-        $app->setAutoExit(false);
-        $app->run(new ArrayInput(['hshn:npm:install']), $out = new BufferedOutput());
+        $output = $this->runCommand(['hshn:npm:install']);
 
-        $output = $out->fetch();
         $this->assertContains('[FooBundle]', $output);
         $this->assertContains('lodash@4.0.0', $output);
         $this->assertContains('[BarBundle]', $output);
