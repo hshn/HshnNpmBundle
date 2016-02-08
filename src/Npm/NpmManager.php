@@ -62,7 +62,7 @@ class NpmManager
     private function each(callable $action)
     {
         return array_reduce($this->bundles, function (array $processes, ConfigurationInterface $configuration) use ($action) {
-            return array_merge($processes, [$action($configuration)]);
+            return array_merge($processes, [$configuration->getName() => $action($configuration)]);
         }, []);
     }
 

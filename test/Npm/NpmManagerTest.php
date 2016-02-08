@@ -38,7 +38,12 @@ class NpmManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRun()
     {
-        $this->manager->install(['foo' => 'bar']);
+        $processes = $this->manager->install(['foo' => 'bar']);
+
+        $this->assertCount(2, $processes);
+        $this->assertArrayHasKey('foo', $processes);
+        $this->assertArrayHasKey('bar', $processes);
+
         $this->npm->install(['foo' => 'bar'], Argument::type(ConfigurationInterface::class))->shouldBeCalledTimes(2);
     }
 
@@ -47,7 +52,12 @@ class NpmManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstall()
     {
-        $this->manager->run(['foo' => 'bar']);
+        $processes = $this->manager->run(['foo' => 'bar']);
+
+        $this->assertCount(2, $processes);
+        $this->assertArrayHasKey('foo', $processes);
+        $this->assertArrayHasKey('bar', $processes);
+
         $this->npm->run(['foo' => 'bar'], Argument::type(ConfigurationInterface::class))->shouldBeCalledTimes(2);
     }
 
@@ -56,7 +66,12 @@ class NpmManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testBundles()
     {
-        $this->manager->bundles(['foo'])->run(['foo' => 'bar']);
+        $processes = $this->manager->bundles(['foo'])->run(['foo' => 'bar']);
+
+        $this->assertCount(1, $processes);
+        $this->assertArrayHasKey('foo', $processes);
+        $this->assertArrayNotHasKey('bar', $processes);
+
         $this->npm->run(['foo' => 'bar'], Argument::type(ConfigurationInterface::class))->shouldBeCalledTimes(1);
     }
 
