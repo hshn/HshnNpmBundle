@@ -11,7 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @author Shota Hoshino <sht.hshn@gmail.com>
  */
-class InstallCommandTest extends WebTestCase
+class NpmInstallCommandTest extends WebTestCase
 {
     protected function setUp()
     {
