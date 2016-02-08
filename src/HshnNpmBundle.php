@@ -1,6 +1,6 @@
 <?php
 
-namespace Hshn\NpmBundle\HshnNpmBundle;
+namespace Hshn\NpmBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
