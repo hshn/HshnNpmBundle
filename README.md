@@ -46,7 +46,7 @@ hshn_npm:
 
 ### 4. Installing node modules
 
-Place your `package.json` in the config directory, the default value for the config dir is `$yourBundle/Resources/npm`.
+Place your `package.json` in the npm directory, the default value for the npm dir is `$yourBundle/Resources/npm`.
 
 #### Example:
 
@@ -57,4 +57,31 @@ Place your `package.json` in the config directory, the default value for the con
         "lodash": "^4.3.0"
     }
 }
+```
+Now run the command `app/console hshn:npm:install` to install all the dependencies in the npm directory ``$yourBundle/Resources/npm/npde_modules`.
+
+### 5. Use the installed node modules in your build scripts
+
+Write build scripts you like.
+
+> gulp example is [here](https://github.com/hshn/HshnNpmBundle/tree/master/test/Functional/Bundle/GulpBundle/Resources/npm)
+
+### 6. Register your build scripts as a npm script
+
+```json
+{
+    "name": "your-bundle-name",
+    "dependencies": {
+        "lodash": "^4.3.0"
+    },
+    "scripts": {
+        "build": "gulp build"
+    }
+}
+```
+
+then you can run the npm script by using following command:
+
+```bash
+$ php app/console hshn:npm:run build # `npm run build` in every bundles
 ```
