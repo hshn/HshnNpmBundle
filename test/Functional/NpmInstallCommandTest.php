@@ -36,4 +36,23 @@ class NpmInstallCommandTest extends NpmCommandTestCase
         $this->assertFileExists($this->getBundleNpmDir('FooBundle').'/node_modules/lodash');
         $this->assertFileExists($this->getBundleNpmDir('BarBundle').'/node_modules/underscore');
     }
+
+    /**
+     * @test
+     */
+    public function testInstallWithBundleSpecifies()
+    {
+        $this->assertFileNotExists($this->getBundleNpmDir('FooBundle').'/node_modules/lodash');
+        $this->assertFileNotExists($this->getBundleNpmDir('BarBundle').'/node_modules/underscore');
+
+        $output = $this->runCommand(['hshn:npm:install', '--bundle=FooBundle']);
+
+        $this->assertContains('[FooBundle]', $output);
+        $this->assertContains('lodash@4.0.0', $output);
+        $this->assertNotContains('[BarBundle]', $output);
+        $this->assertNotContains('underscore@1.8.3', $output);
+
+        $this->assertFileExists($this->getBundleNpmDir('FooBundle').'/node_modules/lodash');
+        $this->assertFileNotExists($this->getBundleNpmDir('BarBundle').'/node_modules/underscore');
+    }
 }
