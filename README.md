@@ -1,5 +1,7 @@
 # HshnNpmBundle
 
+[![Build Status](https://travis-ci.org/hshn/HshnNpmBundle.svg?branch=master)](https://travis-ci.org/hshn/HshnNpmBundle)
+
 The HshnNpmBundle adds support for managing node modules with npm.
 
 Features included:
