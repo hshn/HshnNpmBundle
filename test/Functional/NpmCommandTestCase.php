@@ -3,6 +3,7 @@
 namespace Hshn\NpmBundle\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Filesystem\Filesystem;
@@ -75,7 +76,9 @@ class NpmCommandTestCase extends WebTestCase
     {
         $app = new Application(static::$kernel);
         $app->setAutoExit(false);
-        $code = $app->run(new ArrayInput($args), $out = new BufferedOutput());
+
+        // run application prepending application name
+        $code = $app->run(new ArgvInput(array_merge(['cli.php'], $args)), $out = new BufferedOutput());
 
         $output = $out->fetch();
         $this->assertEquals(0, $code, sprintf('The command "%s" was failed. (code: %d) %s', implode(' ', $args), $code, $output));

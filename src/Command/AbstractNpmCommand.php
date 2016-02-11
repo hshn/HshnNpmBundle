@@ -36,7 +36,7 @@ abstract class AbstractNpmCommand extends Command
     protected function configure()
     {
         $this
-            ->addOption('bundle', 'b', InputOption::VALUE_REQUIRED| InputOption::VALUE_IS_ARRAY, 'bundle name', [])
+            ->addOption('bundle', 'b', InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'bundle name', [])
         ;
     }
 
