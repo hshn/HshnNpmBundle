@@ -7,3 +7,4 @@ hshn_npm:
   bundles:
     FooBundle: ~
     BarBundle: ~
+    GulpBundle: ~

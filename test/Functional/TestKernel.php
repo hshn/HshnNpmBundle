@@ -4,6 +4,7 @@ namespace Hshn\NpmBundle\Functional;
 
 use Hshn\NpmBundle\Functional\Bundle\BarBundle\BarBundle;
 use Hshn\NpmBundle\Functional\Bundle\FooBundle\FooBundle;
+use Hshn\NpmBundle\Functional\Bundle\GulpBundle\GulpBundle;
 use Hshn\NpmBundle\HshnNpmBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -25,6 +26,7 @@ class TestKernel extends Kernel
             new HshnNpmBundle(),
             new FooBundle(),
             new BarBundle(),
+            new GulpBundle(),
         ];
     }
 
