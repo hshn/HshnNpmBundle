@@ -28,3 +28,8 @@ services:
     parent: hshn.npm.commands.abstract
     class: Hshn\NpmBundle\Command\NpmInstallCommand
     tags: [{name: console.command}]
+
+  hshn.npm.commands.run:
+    parent: hshn.npm.commands.abstract
+    class: Hshn\NpmBundle\Command\NpmRunCommand
+    tags: [{name: console.command}]

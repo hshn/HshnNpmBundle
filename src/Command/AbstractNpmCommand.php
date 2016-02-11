@@ -51,7 +51,7 @@ abstract class AbstractNpmCommand extends Command
             $npm = $npm->bundles($bundles);
         }
 
-        $processes = $this->doExecute($npm);
+        $processes = $this->doExecute($npm, $input);
 
         foreach ($processes as $name => $process) {
             $process->start(function ($type, $buffer) use ($name, $output) {
@@ -66,7 +66,8 @@ abstract class AbstractNpmCommand extends Command
 
     /**
      * @param \Hshn\NpmBundle\Npm\NpmManager $npmManager
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      * @return \Symfony\Component\Process\Process[]
      */
-    public abstract function doExecute(NpmManager $npmManager);
+    public abstract function doExecute(NpmManager $npmManager, InputInterface $input);
 }
