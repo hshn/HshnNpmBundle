@@ -2,11 +2,6 @@
 
 namespace Hshn\NpmBundle\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Filesystem\Filesystem;
-
 
 /**
  * @author Shota Hoshino <sht.hshn@gmail.com>
@@ -17,28 +12,10 @@ class NpmInstallCommandTest extends NpmCommandTestCase
     {
         parent::setUp();
 
-        $dirs = [
-            __DIR__.'/Bundle/FooBundle/Resources/npm/node_modules',
-            __DIR__.'/Bundle/BarBundle/Resources/npm/node_modules',
-        ];
-
-        $fs = new Filesystem();
-        $dirs = array_filter($dirs, function ($dir) use ($fs) {
-            return $fs->exists($dir);
-        });
-
-        $files = new \AppendIterator();
-        foreach ($dirs as $dir) {
-            $files->append(new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS),
-                \RecursiveIteratorIterator::CHILD_FIRST
-            ));
-        }
-
-        try {
-            $fs->remove($files);
-        } catch (\Exception $e) {
-        }
+        $this->deleteDirectory([
+            $this->getBundleNpmDir('FooBundle').'/node_modules',
+            $this->getBundleNpmDir('BarBundle').'/node_modules'
+        ]);
     }
 
     /**
@@ -46,8 +23,8 @@ class NpmInstallCommandTest extends NpmCommandTestCase
      */
     public function testInstall()
     {
-        $this->assertFileNotExists(__DIR__.'/Bundle/FooBundle/Resources/npm/node_modules/lodash');
-        $this->assertFileNotExists(__DIR__.'/Bundle/BarBundle/Resources/npm/node_modules/underscore');
+        $this->assertFileNotExists($this->getBundleNpmDir('FooBundle').'/node_modules/lodash');
+        $this->assertFileNotExists($this->getBundleNpmDir('BarBundle').'/node_modules/underscore');
 
         $output = $this->runCommand(['hshn:npm:install']);
 
@@ -56,7 +33,7 @@ class NpmInstallCommandTest extends NpmCommandTestCase
         $this->assertContains('[BarBundle]', $output);
         $this->assertContains('underscore@1.8.3', $output);
 
-        $this->assertFileExists(__DIR__.'/Bundle/FooBundle/Resources/npm/node_modules/lodash');
-        $this->assertFileExists(__DIR__.'/Bundle/BarBundle/Resources/npm/node_modules/underscore');
+        $this->assertFileExists($this->getBundleNpmDir('FooBundle').'/node_modules/lodash');
+        $this->assertFileExists($this->getBundleNpmDir('BarBundle').'/node_modules/underscore');
     }
 }
