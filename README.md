@@ -1,6 +1,6 @@
 # HshnNpmBundle
 
-[![Build Status](https://travis-ci.org/hshn/HshnNpmBundle.svg?branch=master)](https://travis-ci.org/hshn/HshnNpmBundle)
+[![Build Status](https://travis-ci.org/hshn/HshnNpmBundle.svg?branch=master)](https://travis-ci.org/hshn/HshnNpmBundle) [![Latest Stable Version](https://poser.pugx.org/hshn/npm-bundle/v/stable)](https://packagist.org/packages/hshn/npm-bundle) [![Latest Unstable Version](https://poser.pugx.org/hshn/npm-bundle/v/unstable)](https://packagist.org/packages/hshn/npm-bundle)
 
 The HshnNpmBundle adds support for managing node modules with npm.
 
