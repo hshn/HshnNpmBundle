@@ -36,8 +36,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowExceptionUnlessValidDirectory($directory)
     {
-        $this->setExpectedExceptionRegExp(\InvalidArgumentException::class);
-        new Configuration('', $directory);
+        $this->setExpectedExceptionRegExp(\InvalidArgumentException::class, '/The configuration directory "[^"]+" for "foo" is not a directory/');
+        new Configuration('foo', $directory);
     }
 
     /**

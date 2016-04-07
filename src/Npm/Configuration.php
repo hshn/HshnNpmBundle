@@ -34,7 +34,7 @@ class Configuration implements ConfigurationInterface
         }
 
         if (!$directory->isDir()) {
-            throw new \InvalidArgumentException('The parameter $directory must be a directory');
+            throw new \InvalidArgumentException(sprintf('The configuration directory "%s" for "%s" is not a directory', $directory->getPathname(), $name));
         }
 
         $this->directory = $directory;
