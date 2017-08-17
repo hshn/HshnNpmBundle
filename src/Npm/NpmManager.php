@@ -10,7 +10,7 @@ use Symfony\Component\Process\Process;
 class NpmManager
 {
     /**
-     * @var \Hshn\NpmBundle\Npm\Npm
+     * @var NpmInterface
      */
     private $npm;
 
@@ -21,10 +21,11 @@ class NpmManager
 
     /**
      * NpmManager constructor.
-     * @param \Hshn\NpmBundle\Npm\Npm $npm
+     *
+     * @param NpmInterface             $npm
      * @param ConfigurationInterface[] $bundles
      */
-    public function __construct(Npm $npm, array $bundles)
+    public function __construct(NpmInterface $npm, array $bundles)
     {
         $this->npm = $npm;
         $this->bundles = array_reduce($bundles, function (array $bundles, ConfigurationInterface $configuration) {

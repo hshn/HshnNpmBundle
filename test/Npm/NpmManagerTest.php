@@ -10,7 +10,7 @@ use Prophecy\Argument;
 class NpmManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Npm|\Prophecy\Prophecy\ObjectProphecy;
+     * @var NpmInterface|\Prophecy\Prophecy\ObjectProphecy;
      */
     private $npm;
 
