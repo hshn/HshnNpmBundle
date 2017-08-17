@@ -2,12 +2,13 @@
 
 namespace Hshn\NpmBundle\Npm;
 
+use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * @author Shota Hoshino <sht.hshn@gmail.com>
  */
-class Npm
+class Npm implements NpmInterface
 {
     /**
      * @var string
@@ -24,9 +25,7 @@ class Npm
     }
 
     /**
-     * @param array $commands
-     * @param \Hshn\NpmBundle\Npm\ConfigurationInterface $configuration
-     * @return \Symfony\Component\Process\Process
+     * {@inheritdoc}
      */
     public function run(array $commands, ConfigurationInterface $configuration)
     {
@@ -34,9 +33,7 @@ class Npm
     }
 
     /**
-     * @param array $commands
-     * @param \Hshn\NpmBundle\Npm\ConfigurationInterface $configuration
-     * @return \Symfony\Component\Process\Process
+     * {@inheritdoc}
      */
     public function install(array $commands, ConfigurationInterface $configuration)
     {
@@ -45,8 +42,8 @@ class Npm
 
     /**
      * @param array $commands
-     * @param \Hshn\NpmBundle\Npm\ConfigurationInterface $configuration
-     * @return \Symfony\Component\Process\Process
+     * @param ConfigurationInterface $configuration
+     * @return Process
      */
     private function createProcess(array $commands, ConfigurationInterface $configuration)
     {
