@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "npm": "^3.7.1"
+    "npm": "^3.7.1",
+    "yarn": "^0.27.5"
   }
 }
