@@ -54,6 +54,7 @@ abstract class AbstractNpmCommand extends Command
         $processes = $this->doExecute($npm, $input);
 
         foreach ($processes as $name => $process) {
+            $output->writeln(sprintf('<info>[%s]</info> %s', $name, $process->getCommandLine()));
             $process->start(function ($type, $buffer) use ($name, $output) {
                 $output->writeln(sprintf('<info>[%s]</info> %s', $name, trim($buffer)));
             });
