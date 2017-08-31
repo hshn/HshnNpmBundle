@@ -3,7 +3,7 @@ framework:
   secret: secret
 
 hshn_npm:
-  bin: %kernel.root_dir%/../../node_modules/.bin/npm
+  bin: "%kernel.root_dir%/../../node_modules/.bin/npm"
   bundles:
     FooBundle: ~
     BarBundle: ~

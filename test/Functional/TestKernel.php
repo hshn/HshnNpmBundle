@@ -17,6 +17,26 @@ use Symfony\Component\HttpKernel\Kernel;
 class TestKernel extends Kernel
 {
     /**
+     * @var \SplFileObject
+     */
+    private $config;
+
+    /**
+     * TestKernel constructor.
+     *
+     * @param string $config
+     * @param string $environment
+     * @param bool   $debug
+     */
+    public function __construct($config = __DIR__ . '/config/legacy.yml', $environment = 'test', $debug = true)
+    {
+        $this->config = new \SplFileObject($config);
+
+        parent::__construct($environment, $debug);
+    }
+
+
+    /**
      * @inheritdoc
      */
     public function registerBundles()
@@ -31,10 +51,30 @@ class TestKernel extends Kernel
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getCacheDir()
+    {
+        return parent::getCacheDir().'-'.$this->config->getFilename();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        $name = preg_replace('/^([^.]+)(\.[^.]*)*?$/', '$1', $this->config->getFilename());
+
+        $name = implode('', array_map('ucfirst', preg_split('/[-_]/', $name)));
+
+        return parent::getName().''.$name;
+    }
+
+    /**
      * @inheritdoc
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . '/config/config.yml');
+        $loader->load($this->config->getPathname());
     }
 }
