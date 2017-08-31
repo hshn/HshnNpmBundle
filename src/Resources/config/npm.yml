@@ -2,16 +2,22 @@ parameters:
   hshn.npm.bin: ~
 
 services:
-  hshn.npm:
+  hshn.package_manager.npm:
     public: false
     class: Hshn\NpmBundle\Npm\Npm
-    arguments: [%hshn.npm.bin%]
+    arguments:
+      - ~
+
+  hshn.package_manager.yarn:
+    public: false
+    class: Hshn\NpmBundle\Npm\Yarn
+    arguments:
+      - ~
 
   hshn.npm.manager:
     public: false
     class: Hshn\NpmBundle\Npm\NpmManager
     arguments:
-      - "@hshn.npm"
       - ~
 
   hshn.npm.config:

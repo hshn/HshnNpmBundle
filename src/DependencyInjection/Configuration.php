@@ -21,9 +21,26 @@ class Configuration implements ConfigurationInterface
         $root = $builder->root('hshn_npm');
         $root
             ->children()
-                ->scalarNode('bin')
-                    ->info('npm binary path')
-                    ->defaultValue('/usr/bin/npm')
+                ->enumNode('package_manager')
+                    ->values(['npm', 'yarn'])
+                    ->defaultValue('npm')
+                    ->cannotBeEmpty()
+                ->end()
+                ->arrayNode('bin')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('npm')->info('npm binary path')->defaultValue('npm')->end()
+                        ->scalarNode('yarn')->info('yarn binary path')->defaultValue('yarn')->end()
+                    ->end()
+                    ->beforeNormalization()
+                        ->ifString()
+                        ->then(function ($npmBinPath) {
+                            @trigger_error('The configuration "hshn_npm.bin" for "npm binary path" was deprecated, please use "hshn_npm.bin.npm" instead', E_USER_DEPRECATED);
+                            return [
+                                'npm' => $npmBinPath,
+                            ];
+                        })
+                    ->end()
                 ->end()
                 ->arrayNode('bundles')
                     ->useAttributeAsKey('name')
@@ -32,6 +49,10 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('directory')
                                 ->cannotBeEmpty()
                                 ->defaultValue('./Resources/npm')
+                            ->end()
+                            ->enumNode('package_manager')
+                                ->values(['npm', 'yarn'])
+                                ->defaultNull()
                             ->end()
                         ->end()
                     ->end()

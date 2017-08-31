@@ -25,16 +25,26 @@ class HshnNpmExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('npm.yml');
 
-        $container->setParameter('hshn.npm.bin', $config['bin']);
-
-        $this->loadBundles($config['bundles'], $container);
+        $this->loadBinaries($config['bin'], $container);
+        $this->loadBundles($config['bundles'], $this->getPackageManagerReference($config['package_manager']), $container);
     }
 
     /**
-     * @param array $bundles
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param array            $configs
+     * @param ContainerBuilder $container
      */
-    private function loadBundles(array $bundles, ContainerBuilder $container)
+    private function loadBinaries(array $configs, ContainerBuilder $container)
+    {
+        $container->getDefinition('hshn.package_manager.npm')->replaceArgument(0, $configs['npm']);
+        $container->getDefinition('hshn.package_manager.yarn')->replaceArgument(0, $configs['yarn']);
+    }
+
+    /**
+     * @param array            $bundles
+     * @param Reference        $defaultPackageManager
+     * @param ContainerBuilder $container
+     */
+    private function loadBundles(array $bundles, Reference $defaultPackageManager, ContainerBuilder $container)
     {
         $configurations = [];
 
@@ -43,18 +53,23 @@ class HshnNpmExtension extends Extension
 
             $container
                 ->setDefinition($configuration = "hshn.npm.config.${bundle}", new DefinitionDecorator('hshn.npm.config'))
-                ->setArguments([$bundle, $path.'/'.$config['directory']])
+                ->setArguments([
+                    $bundle,
+                    $path.'/'.$config['directory'],
+                    $config['package_manager'] ? $this->getPackageManagerReference($config['package_manager']) : $defaultPackageManager,
+                ])
                 ->setPublic(false);
 
             $configurations[] = new Reference($configuration);
         }
 
-        $container->getDefinition('hshn.npm.manager')->replaceArgument(1, $configurations);
+        $container->getDefinition('hshn.npm.manager')->replaceArgument(0, $configurations);
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param string $bundle
+     * @param ContainerBuilder $container
+     * @param string           $bundle
+     *
      * @return \SplFileInfo
      */
     private function getBundleLocation(ContainerBuilder $container, $bundle)
@@ -68,5 +83,15 @@ class HshnNpmExtension extends Extension
         }
 
         throw new \InvalidArgumentException(sprintf('Unknown bundle "%s" was given', $bundle));
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Reference
+     */
+    private function getPackageManagerReference($name)
+    {
+        return new Reference(sprintf('hshn.package_manager.%s', $name));
     }
 }
