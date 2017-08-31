@@ -3,6 +3,7 @@
 namespace Hshn\NpmBundle\Npm;
 
 use Prophecy\Argument;
+use Symfony\Component\Process\Process;
 
 /**
  * @author Shota Hoshino <sht.hshn@gmail.com>
@@ -10,14 +11,14 @@ use Prophecy\Argument;
 class NpmManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var NpmInterface|\Prophecy\Prophecy\ObjectProphecy;
-     */
-    private $npm;
-
-    /**
      * @var NpmManager
      */
     private $manager;
+
+    /**
+     * @var ConfigurationInterface[]|\PHPUnit_Framework_MockObject_MockObject[]
+     */
+    private $configurations;
 
     /**
      * @inheritDoc
@@ -26,10 +27,9 @@ class NpmManagerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->npm = $this->prophesize(Npm::class);
-        $this->manager = new NpmManager($this->npm->reveal(), [
-            $this->getConfiguration('foo')->reveal(),
-            $this->getConfiguration('bar')->reveal(),
+        $this->manager = new NpmManager($this->configurations = [
+            $this->mockConfiguration('foo'),
+            $this->mockConfiguration('bar'),
         ]);
     }
 
@@ -38,13 +38,16 @@ class NpmManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRun()
     {
-        $processes = $this->manager->install(['foo' => 'bar']);
+        $args = ['foo' => 'bar'];
+
+        $this->configurations[0]->expects(self::once())->method('run')->with($args)->willReturn($this->mockProcess());
+        $this->configurations[1]->expects(self::once())->method('run')->with($args)->willReturn($this->mockProcess());
+
+        $processes = $this->manager->run($args);
 
         $this->assertCount(2, $processes);
         $this->assertArrayHasKey('foo', $processes);
         $this->assertArrayHasKey('bar', $processes);
-
-        $this->npm->install(['foo' => 'bar'], Argument::type(ConfigurationInterface::class))->shouldBeCalledTimes(2);
     }
 
     /**
@@ -52,13 +55,16 @@ class NpmManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstall()
     {
-        $processes = $this->manager->run(['foo' => 'bar']);
+        $args = ['foo' => 'bar'];
+
+        $this->configurations[0]->expects(self::once())->method('install')->with($args)->willReturn($this->mockProcess());
+        $this->configurations[1]->expects(self::once())->method('install')->with($args)->willReturn($this->mockProcess());
+
+        $processes = $this->manager->install($args);
 
         $this->assertCount(2, $processes);
         $this->assertArrayHasKey('foo', $processes);
         $this->assertArrayHasKey('bar', $processes);
-
-        $this->npm->run(['foo' => 'bar'], Argument::type(ConfigurationInterface::class))->shouldBeCalledTimes(2);
     }
 
     /**
@@ -66,24 +72,36 @@ class NpmManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testBundles()
     {
-        $processes = $this->manager->bundles(['foo'])->run(['foo' => 'bar']);
+        $args = ['foo' => 'bar'];
+
+        $this->configurations[0]->expects(self::once())->method('run')->with($args)->willReturn($this->mockProcess());
+        $this->configurations[1]->expects(self::never())->method('run');
+
+        $processes = $this->manager->bundles(['foo'])->run($args);
 
         $this->assertCount(1, $processes);
         $this->assertArrayHasKey('foo', $processes);
         $this->assertArrayNotHasKey('bar', $processes);
-
-        $this->npm->run(['foo' => 'bar'], Argument::type(ConfigurationInterface::class))->shouldBeCalledTimes(1);
     }
 
     /**
      * @param string $name
-     * @return \Prophecy\Prophecy\ObjectProphecy
+     *
+     * @return ConfigurationInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getConfiguration($name)
+    private function mockConfiguration($name)
     {
-        $configuration = $this->prophesize(ConfigurationInterface::class);
-        $configuration->getName()->willReturn($name);
+        $config = $this->createMock(ConfigurationInterface::class);
+        $config->expects(self::any())->method('getName')->willReturn($name);
 
-        return $configuration;
+        return $config;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Process
+     */
+    private function mockProcess()
+    {
+        return $this->createMock(Process::class);
     }
 }
