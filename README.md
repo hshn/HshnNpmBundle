@@ -44,6 +44,31 @@ hshn_npm:
         YourBundle: ~
 ```
 
+#### 3.1. Choose package manager (optional)
+
+You can specify package manager which will be used globally.
+
+```yml
+# app/config.config.yml
+
+hshn_npm:
+    package_manager: npm # or yarn
+```
+
+Also you can override package manager configuration per bundles.
+
+```yml
+# app/config.config.yml
+hshn_npm:
+    package_manager: npm # use npm globally
+    bundles:
+        # FooBundle will use npm
+        FooBundle: ~
+        # BarBundle will use yarn
+        BarBundle:
+          package_manager: yarn
+```
+
 ### 4. Installing node modules
 
 Place your `package.json` in the npm directory, the default value for the npm dir is `$yourBundle/Resources/npm`.
