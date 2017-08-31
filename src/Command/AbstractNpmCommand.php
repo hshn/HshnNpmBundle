@@ -15,13 +15,14 @@ use Symfony\Component\Process\Process;
 abstract class AbstractNpmCommand extends Command
 {
     /**
-     * @var \Hshn\NpmBundle\Npm\NpmManager
+     * @var NpmManager
      */
     private $npmManager;
 
     /**
      * AbstractNpmCommand constructor.
-     * @param \Hshn\NpmBundle\Npm\NpmManager $npmManager
+     *
+     * @param NpmManager $npmManager
      */
     public function __construct(NpmManager $npmManager)
     {
@@ -66,9 +67,10 @@ abstract class AbstractNpmCommand extends Command
     }
 
     /**
-     * @param \Hshn\NpmBundle\Npm\NpmManager $npmManager
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @return \Symfony\Component\Process\Process[]
+     * @param NpmManager     $npmManager
+     * @param InputInterface $input
+     *
+     * @return Process[]
      */
     public abstract function doExecute(NpmManager $npmManager, InputInterface $input);
 }
