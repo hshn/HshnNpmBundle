@@ -1,0 +1,14 @@
+framework:
+  test: ~
+  secret: secret
+
+hshn_npm:
+  package_manager: yarn
+  bin:
+    npm: "%kernel.root_dir%/../../node_modules/.bin/npm"
+    yarn: "%kernel.root_dir%/../../node_modules/.bin/yarn"
+  bundles:
+    FooBundle:
+      package_manager: npm
+    BarBundle: ~
+    GulpBundle: ~

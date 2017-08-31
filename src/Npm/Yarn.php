@@ -1,14 +1,13 @@
 <?php
 
+
 namespace Hshn\NpmBundle\Npm;
+
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
-/**
- * @author Shota Hoshino <sht.hshn@gmail.com>
- */
-class Npm implements NpmInterface
+class Yarn implements NpmInterface
 {
     /**
      * @var string
@@ -16,7 +15,8 @@ class Npm implements NpmInterface
     private $binPath;
 
     /**
-     * Npm constructor.
+     * Yarn constructor.
+     *
      * @param string $binPath
      */
     public function __construct($binPath)
@@ -37,12 +37,13 @@ class Npm implements NpmInterface
      */
     public function install(array $commands, ConfigurationInterface $configuration)
     {
-        return $this->createProcess(array_merge(['install'], $commands), $configuration);
+        return $this->createProcess($commands, $configuration);
     }
 
     /**
-     * @param array $commands
+     * @param array                  $commands
      * @param ConfigurationInterface $configuration
+     *
      * @return Process
      */
     private function createProcess(array $commands, ConfigurationInterface $configuration)

@@ -16,11 +16,17 @@ class NpmCommandTestCase extends WebTestCase
     /**
      * @inheritDoc
      */
-    protected function setUp()
+    protected static function createKernel(array $options = array())
     {
-        parent::setUp();
+        if (null === static::$class) {
+            static::$class = static::getKernelClass();
+        }
 
-        static::bootKernel();
+        return new static::$class(
+            $options['config'],
+            isset($options['environment']) ? $options['environment'] : 'test',
+            isset($options['debug']) ? $options['debug'] : true
+        );
     }
 
     /**

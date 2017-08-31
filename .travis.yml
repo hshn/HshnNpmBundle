@@ -1,26 +1,22 @@
 language: php
 
-node_js:
-  - 0.12
-
 php:
   - 5.6
   - 7.0
-  - hhvm
+  - 7.1
 
 matrix:
   fast_finish: true
   include:
-    - php: 5.6
+    - php: 7.0
       env: SYMFONY_VERSION=2.7.*
-    - php: 5.6
+    - php: 7.0
       env: SYMFONY_VERSION=2.8.*
-    - php: 5.6
+    - php: 7.0
       env: SYMFONY_VERSION=3.0.*
-  allow_failures:
-    - php: hhvm
 
 before_install:
+  - nvm install
   - composer selfupdate
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
 

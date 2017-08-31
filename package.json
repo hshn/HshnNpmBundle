@@ -1,5 +1,19 @@
 {
+  "private": true,
+  "engines": {
+    "node": ">= 6.9.0"
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "test": "npm run gulp test",
+    "watch": "npm run gulp watch"
+  },
   "devDependencies": {
-    "npm": "^3.7.1"
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-run": "^1.7.1",
+    "gulp-watch": "^4.3.11",
+    "npm": "^3.7.1",
+    "yarn": "^0.27.5"
   }
 }

@@ -10,23 +10,17 @@ use Symfony\Component\Process\Process;
 class NpmManager
 {
     /**
-     * @var \Hshn\NpmBundle\Npm\Npm
-     */
-    private $npm;
-
-    /**
-     * @var \Hshn\NpmBundle\Npm\ConfigurationInterface[]
+     * @var ConfigurationInterface[]
      */
     private $bundles;
 
     /**
      * NpmManager constructor.
-     * @param \Hshn\NpmBundle\Npm\Npm $npm
+     *
      * @param ConfigurationInterface[] $bundles
      */
-    public function __construct(Npm $npm, array $bundles)
+    public function __construct(array $bundles)
     {
-        $this->npm = $npm;
         $this->bundles = array_reduce($bundles, function (array $bundles, ConfigurationInterface $configuration) {
             return $bundles + [$configuration->getName() => $configuration];
         }, []);
@@ -35,28 +29,31 @@ class NpmManager
 
     /**
      * @param array $commands
-     * @return \Symfony\Component\Process\Process[]
+     *
+     * @return Process[]
      */
     public function install(array $commands = [])
     {
         return $this->each(function (ConfigurationInterface $configuration) use ($commands) {
-            return $this->npm->install($commands, $configuration);
+            return $configuration->install($commands);
         });
     }
 
     /**
      * @param array $commands
-     * @return \Symfony\Component\Process\Process[]
+     *
+     * @return Process[]
      */
     public function run(array $commands = [])
     {
         return $this->each(function (ConfigurationInterface $configuration) use ($commands) {
-            return $this->npm->run($commands, $configuration);
+            return $configuration->run($commands);
         });
     }
 
     /**
      * @param callable $action
+     *
      * @return Process[]
      */
     private function each(callable $action)
@@ -68,6 +65,7 @@ class NpmManager
 
     /**
      * @param array $bundles
+     *
      * @return NpmManager
      */
     public function bundles(array $bundles)
@@ -84,11 +82,12 @@ class NpmManager
             return $this->bundles[$name];
         }, $bundles);
 
-        return new NpmManager($this->npm, $bundles);
+        return new NpmManager($bundles);
     }
 
     /**
      * @param string $bundle
+     *
      * @return bool
      */
     private function isExistentBundle($bundle)

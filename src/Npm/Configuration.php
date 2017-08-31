@@ -19,11 +19,18 @@ class Configuration implements ConfigurationInterface
     private $directory;
 
     /**
-     * Configuration constructor.
-     * @param string $name
-     * @param \SplFileInfo|string $directory
+     * @var NpmInterface
      */
-    public function __construct($name, $directory)
+    private $npm;
+
+    /**
+     * Configuration constructor.
+     *
+     * @param string              $name
+     * @param \SplFileInfo|string $directory
+     * @param NpmInterface        $npm
+     */
+    public function __construct($name, $directory, NpmInterface $npm)
     {
         $this->name = $name;
 
@@ -38,6 +45,7 @@ class Configuration implements ConfigurationInterface
         }
 
         $this->directory = $directory;
+        $this->npm = $npm;
     }
 
     /**
@@ -54,5 +62,21 @@ class Configuration implements ConfigurationInterface
     public function getDirectory()
     {
         return $this->directory;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function install(array $commands)
+    {
+        return $this->npm->install($commands, $this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function run(array $commands)
+    {
+        return $this->npm->run($commands, $this);
     }
 }
