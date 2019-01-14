@@ -9,11 +9,9 @@ matrix:
   fast_finish: true
   include:
     - php: 7.0
-      env: SYMFONY_VERSION=2.7.*
-    - php: 7.0
       env: SYMFONY_VERSION=2.8.*
     - php: 7.0
-      env: SYMFONY_VERSION=3.0.*
+      env: SYMFONY_VERSION=3.4.*
 
 before_install:
   - nvm install
