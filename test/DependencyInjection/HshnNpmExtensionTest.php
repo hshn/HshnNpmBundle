@@ -42,7 +42,9 @@ class HshnNpmExtensionTest extends \PHPUnit_Framework_TestCase
     public function test()
     {
         $container = $this->load([
-            'bin'     => '/usr/local/bin/npm',
+            'bin'     => [
+                'npm' => '/usr/local/bin/npm',
+            ],
             'bundles' => [
                 'FooBundle' => ['directory' => '..'],
             ],
@@ -55,6 +57,7 @@ class HshnNpmExtensionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedDeprecation The configuration "hshn_npm.bin" for "npm binary path" was deprecated
      */
     public function testBinariesLegacy()
     {
@@ -109,7 +112,9 @@ class HshnNpmExtensionTest extends \PHPUnit_Framework_TestCase
     public function testThrowExceptionUnlessValidBundles()
     {
         $this->load([
-            'bin'     => '/usr/local/bin/npm',
+            'bin'     => [
+                'npm' => '/usr/local/bin/npm',
+            ],
             'bundles' => [
                 'FooBundle' => null,
                 'BazBundle' => null,
