@@ -20,7 +20,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.27",
-        "symfony/framework-bundle": "^2.7.6|^3.0.2"
+        "symfony/framework-bundle": "^2.8.0 || ^3.4.0",
+        "symfony/phpunit-bridge": "^2.8.0 || ^3.4.0"
     },
     "autoload": {
         "psr-4": { "Hshn\\NpmBundle\\": "src" }
@@ -29,7 +30,8 @@
         "psr-4": { "Hshn\\NpmBundle\\": "test" }
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {

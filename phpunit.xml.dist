@@ -17,4 +17,12 @@
             <directory>test</directory>
         </testsuite>
     </testsuites>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
+    <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="100000" />
+    </php>
 </phpunit>
