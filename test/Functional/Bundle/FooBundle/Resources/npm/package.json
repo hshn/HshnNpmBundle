@@ -3,6 +3,6 @@
   "description": "foo bundle for HshnNpmBundle tests",
   "private": true,
   "dependencies": {
-    "lodash": "4.0.0"
+    "lodash": "4.17.11"
   }
 }
