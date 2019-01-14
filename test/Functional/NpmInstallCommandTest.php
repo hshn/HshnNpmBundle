@@ -31,7 +31,7 @@ class NpmInstallCommandTest extends NpmCommandTestCase
         $output = $this->runCommand(['hshn:npm:install']);
 
         $this->assertContains('[FooBundle]', $output);
-        $this->assertContains('lodash@4.0.0', $output);
+        $this->assertContains('lodash@4.17.11', $output);
         $this->assertContains('[BarBundle]', $output);
         $this->assertContains('underscore@1.8.3', $output);
 
@@ -72,7 +72,7 @@ class NpmInstallCommandTest extends NpmCommandTestCase
         $output = $this->runCommand(['hshn:npm:install']);
 
         $this->assertContains('[FooBundle]', $output);
-        $this->assertContains('lodash@4.0.0', $output);
+        $this->assertContains('lodash@4.17.11', $output);
         $this->assertContains('[BarBundle] yarn install', $output);
 
         $this->assertFileExists($this->getBundleNpmDir('FooBundle').'/node_modules/lodash');
